@@ -7,8 +7,8 @@ import random
 
 # Constant value
 DATA_ROOT = "../data/"
-TRAIN_DIR = DATA_ROOT + "stage1_train_256x256/images/"
-MASK_DIR = DATA_ROOT + "stage1_train_256x256/masks/"
+TRAIN_DIR = DATA_ROOT + "stage1_train_images/"
+MASK_DIR = DATA_ROOT + "stage1_train_class_256x256/masks/"
 TEST_DIR = DATA_ROOT + "stage1_test_images/"
 TRAIN_LABEL_CSV = DATA_ROOT + "stage1_train_labels.csv"
 TRAIN_IMAGE_IDS = [x.split('.')[0] for x in os.listdir(TRAIN_DIR) if x.endswith(".png")]
@@ -23,7 +23,7 @@ def runlength_to_3D(obj_runlength, H, W):
     """ transform the run-length object data into H*W*C matrix,  
     just like pixels displaying in image.
     The Object is labeled as WHITE, background is marked as Black"""
-    obj_1D = np.zeros((H*W*4,)) # initial background as BLACK
+    obj_1D = np.zeros((H*W,)) # initial background as BLACK
     obj_runlength_list = obj_runlength.split(" ")
     for i in range(len(obj_runlength_list)):
         if i % 2 == 0:
@@ -31,12 +31,13 @@ def runlength_to_3D(obj_runlength, H, W):
         else:
             run_length = int(obj_runlength_list[i])
             obj_1D[start_point: start_point + run_length] = 255 # WHITE
-    obj_3D = np.stack((obj_1D[0:0+H*W ].reshape(W,H).T,
-                          obj_1D[1:1+H*W ].reshape(W,H).T,
-                          obj_1D[2:2+H*W ].reshape(W,H).T,
-                          obj_1D[3:3+H*W ].reshape(W,H).T
-                          ), axis = -1)
-    return obj_3D
+#    L = H*W
+#    obj_3D = np.stack((obj_1D[0*L:0*L+L ].reshape(W,H).T,
+#                      obj_1D[1*L:1*L+L ].reshape(W,H).T,
+#                      obj_1D[2*L:2*L+L ].reshape(W,H).T,
+#                      obj_1D[3*L:3*L+L ].reshape(W,H).T
+#                          ), axis = -1)
+    return obj_1D.reshape(W,H).T
 
 def obj_select(image_id):
     """fetch all object run-length data for one image"""

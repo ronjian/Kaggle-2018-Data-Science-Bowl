@@ -1,12 +1,12 @@
-- dice loss
-- IOU loss # http://angusg.com/writing/2016/12/28/optimizing-iou-semantic-segmentation.html
+- dice(IOU) loss 
+    # https://github.com/matpalm/bnn/blob/master/util.py#L51
+    # http://angusg.com/writing/2016/12/28/optimizing-iou-semantic-segmentation.html
 - classify microscope
 - clean code, concrete utils
 - pad one time before input or pad at each layer
 - how about 3x3 conv kernal on 519x161 images
 - upsampling: 
     # https://github.com/matpalm/bnn/blob/master/model.py
-    - concat previous layers or not
     - tf.image.resize_nearest_neighbor or transpose conv
 - batch norm or not
 - sharp contour:
@@ -14,4 +14,5 @@
     - raise contour loss weight for binary loss
     - seperate a class for contour
     - seperate a model for contour
+- tensorflow input pipeline
 
