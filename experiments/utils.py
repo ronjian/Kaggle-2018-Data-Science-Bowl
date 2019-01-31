@@ -31,12 +31,6 @@ def runlength_to_3D(obj_runlength, H, W):
         else:
             run_length = int(obj_runlength_list[i])
             obj_1D[start_point: start_point + run_length] = 255 # WHITE
-#    L = H*W
-#    obj_3D = np.stack((obj_1D[0*L:0*L+L ].reshape(W,H).T,
-#                      obj_1D[1*L:1*L+L ].reshape(W,H).T,
-#                      obj_1D[2*L:2*L+L ].reshape(W,H).T,
-#                      obj_1D[3*L:3*L+L ].reshape(W,H).T
-#                          ), axis = -1)
     return obj_1D.reshape(W,H).T
 
 def obj_select(image_id):
